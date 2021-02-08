@@ -1,0 +1,34 @@
+.dialogWrapper {
+    display: flex;
+    padding: 20px 0;
+    text-align: left;
+}
+
+.dialogList {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 20%;
+    max-width: 20%;
+    width: 100%;
+}
+
+.dialogItem {
+
+}
+
+.dialogActive {
+    flex: 0 0 80%;
+    max-width: 80%;
+}
+
+.messageWrapper {
+
+}
+
+.messageUsername {
+
+}
+
+.messageText {
+
+}

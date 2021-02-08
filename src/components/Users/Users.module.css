@@ -1,0 +1,9 @@
+.active {
+    font-weight: bold;
+    transform: scale(1.2);
+}
+
+.user-logo img{
+    max-width: 100px;
+    border-radius: 50%;
+}

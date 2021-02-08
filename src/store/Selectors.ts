@@ -1,0 +1,6 @@
+import {IGlobalState} from "./store";
+
+interface IRootState extends IGlobalState{}
+
+export const selectUsers = (state: IRootState) => state.users
+export const selectDialogs = (state: IRootState) => state.dialogs

@@ -1,0 +1,36 @@
+
+@keyframes spinnerInner {
+    0% { transform: rotate(0deg) }
+    50% { transform: rotate(180deg) }
+    100% { transform: rotate(360deg) }
+}
+
+.spinnerWrapper {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    overflow: hidden;
+    background: white;
+}
+
+.spinnerInner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0;
+}
+
+.spinner {
+    position: absolute;
+    animation: spinnerInner 1s linear infinite;
+    width: 80px;
+    height: 80px;
+    top: 10px;
+    left: 10px;
+    border-radius: 50%;
+    box-shadow: 0 4px 0 0 #93dbe9;
+    transform-origin: 40px 42px;
+    box-sizing: content-box;
+}

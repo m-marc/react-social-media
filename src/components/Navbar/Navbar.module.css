@@ -1,0 +1,14 @@
+.link {
+    padding: 5px 10px;
+    text-align: left;
+    color: #2a5885;
+    text-decoration: none;
+}
+
+.link.active {
+    font-weight: 600;
+}
+
+.link:hover{
+    background-color: var(--link-hover-color);
+}
