@@ -1,47 +1,26 @@
 import React, {useEffect} from 'react'
-import {
-    FollowUserAC,
-    GetUsersAC,
-    SetCurrentPageAC,
-    SetTotalUsersAC,
-    ToggleIsFetchingAC,
-    useDispatch
-} from "../../store/users-actions"
-import {useSelector} from "react-redux";
-import {selectUsers} from "../../store/Selectors";
-import axios from "axios";
+import {useSelector, useDispatch} from "react-redux";
+import {selectUsers} from "../../redux/Selectors";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
+import {followUser, getUsers} from "../../redux/users-reducer";
 
 const UsersContainer: React.FC = () => {
     const dispatch = useDispatch()
-    const {users, totalCount, usersPerPage, currentPage, isFetching} = useSelector(selectUsers)
+    const {users, totalCount, usersPerPage, currentPage, isLoading} = useSelector(selectUsers)
 
-    const onFollowHandle = (userId: number, followed: boolean) => dispatch(FollowUserAC(userId, followed))
-    const onPageChanged = (page: number) => {
-        toggleLoader(true)
-        dispatch(SetCurrentPageAC(page))
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${usersPerPage}`)
-            .then(res => {
-                toggleLoader(false)
-                dispatch(GetUsersAC(res.data.items))
-            })
+    const onFollowHandle = (userId: number, followed: boolean, btn: EventTarget & HTMLButtonElement) => {
+        dispatch(followUser(userId, followed, btn))
     }
-    const toggleLoader = (status: boolean) => dispatch(ToggleIsFetchingAC(status))
+    const onPageChanged = (page: number) => dispatch(getUsers(page, usersPerPage))
 
     useEffect(() => {
-        toggleLoader(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${usersPerPage}`)
-            .then(res => {
-                toggleLoader(false)
-                dispatch(GetUsersAC(res.data.items))
-                dispatch(SetTotalUsersAC(res.data.totalCount))
-            })
+        dispatch(getUsers(currentPage, usersPerPage))
     }, [])
 
     return (
         <>
-            {isFetching
+            {isLoading
                 ? <Preloader />
                 : <Users
                     users={users}

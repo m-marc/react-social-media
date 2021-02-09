@@ -6,7 +6,7 @@ export enum ACTIONS_TYPE {
     GET_USERS = 'Users/GET_USERS',
     SET_CURRENT_PAGE = 'Users/onPageChanged',
     SET_TOTAL_USERS = 'Users/setTotalUsers',
-    IS_FETCHING = 'UsersContainer/isFetching'
+    IS_LOADING = 'UsersContainer/toggleLoader'
 }
 
 export type FollowUser = {
@@ -66,20 +66,20 @@ export const SetTotalUsersAC = (totalCount: number): SetTotalUsers => {
     }
 }
 
-export type ToggleIsFetching = {
-    type: ACTIONS_TYPE.IS_FETCHING,
+export type ToggleIsLoading = {
+    type: ACTIONS_TYPE.IS_LOADING,
     payload: {
-        isFetching: boolean
+        isLoading: boolean
     }
 }
 
-export const ToggleIsFetchingAC = (isFetching: boolean): ToggleIsFetching => {
-    return { type: ACTIONS_TYPE.IS_FETCHING, payload: {isFetching} }
+export const ToggleIsLoading = (isLoading: boolean): ToggleIsLoading => {
+    return { type: ACTIONS_TYPE.IS_LOADING, payload: {isLoading} }
 }
 
-export type UsersReducersTypes = FollowUser | GetUsers | SetCurrentPage | SetTotalUsers | ToggleIsFetching
+export type UsersReducerTypes = FollowUser | GetUsers | SetCurrentPage | SetTotalUsers | ToggleIsLoading
 
 export function useDispatch() {
     const dispatch = _useDispatch()
-    return (ac: UsersReducersTypes) => dispatch(ac)
+    return (ac: UsersReducerTypes) => dispatch(ac)
 }

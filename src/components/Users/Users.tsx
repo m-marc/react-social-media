@@ -1,16 +1,16 @@
 import React from 'react'
-import {usersType} from "../../store/users-reducer";
+import {usersType} from "../../redux/users-reducer";
 import userIcon from "../../assets/img/user-icon-placeholder.png"
 import s from "./Users.module.css";
 import {NavLink} from "react-router-dom";
 
 type usersPropsType = {
     users: usersType[],
-    onFollowCallback: (userId: number, followed: boolean) => void,
+    onFollowCallback: (userId: number, followed: boolean, btn: EventTarget & HTMLButtonElement) => void,
     usersPerPage: number,
     totalCount: number,
     currentPage: number,
-    onPageChanged: (page: number) => void
+    onPageChanged: (page: number) => void,
 }
 
 const Users: React.FC<usersPropsType> = (props) => {
@@ -20,10 +20,11 @@ const Users: React.FC<usersPropsType> = (props) => {
     for (let i = 1 ; i <= totalUsers; i++ ) {
         pageNumbers.push(i)
     }
+
     return ( <>
             <div>
                 { pageNumbers.map( btn => <button key={`b-${btn}`}
-                    onClick={(e) => {onPageChanged(btn)}}
+                    onClick={() => {onPageChanged(btn)}}
                     className={currentPage === btn ? s.active : ""}>
                     {btn}
                 </button>) }
@@ -33,7 +34,7 @@ const Users: React.FC<usersPropsType> = (props) => {
                     users.map( (u) => <div key={u.id}>
                         <div className={s["user-logo"]}>
                             <NavLink to={`/profile/${u.id}`}><img src={u.photos.small !== null ? u.photos.small : userIcon} alt=""/></NavLink>
-                            <button onClick={() => {onFollowCallback(u.id, u.followed)}}>{u.followed ? "Unfollow" : "Follow"}</button>
+                            <button onClick={(event) => {onFollowCallback(u.id, u.followed, event.currentTarget)}}>{u.followed ? "Unfollow" : "Follow"}</button>
                         </div>
                         <div>
                             <div>

@@ -11,11 +11,11 @@ export type AddPost = {type: ACTIONS_TYPE.ADD_POST}
 export const AddPost = (): AddPost => ({type: ACTIONS_TYPE.ADD_POST})
 
 export type UpdateNewPostText = {type: ACTIONS_TYPE.UPDATE_NEW_POST_TEXT, payload: string}
-export const UpdateNewPostText = (text: string) => ({type: ACTIONS_TYPE.UPDATE_NEW_POST_TEXT, payload: text})
+export const UpdateNewPostText = (text: string): UpdateNewPostText => ({type: ACTIONS_TYPE.UPDATE_NEW_POST_TEXT, payload: text})
 
 
 export type SetUserProfile = {type: ACTIONS_TYPE.SET_USER_PROFILE, payload?: profileType}
-export const SetUserProfile = (profile?: profileType) => ({type: ACTIONS_TYPE.SET_USER_PROFILE, payload: profile})
+export const SetUserProfile = (profile?: profileType): SetUserProfile => ({type: ACTIONS_TYPE.SET_USER_PROFILE, payload: profile})
 
 export type ProfileReducerTypes = AddPost | SetUserProfile | UpdateNewPostText
 

@@ -1,4 +1,7 @@
-import {ACTIONS_TYPE, ProfileReducerTypes} from "./profile-actions";
+import {ACTIONS_TYPE, ProfileReducerTypes, SetUserProfile} from "./profile-actions";
+import {ThunkAction} from "redux-thunk";
+import {IGlobalState} from "./store";
+import {API} from "../api/api";
 
 let initialState = {
     posts: [
@@ -70,4 +73,15 @@ export const profileReducer = (state: profilePageType = initialState, action: Pr
         default:
             return state
     }
+}
+
+type ThunkType = ThunkAction<void, IGlobalState, unknown, ProfileReducerTypes>
+
+export const getUserProfile = (userId: number | string): ThunkType => {
+    return (dispatch => {
+        API.getUserData(userId)
+            .then(res => {
+                dispatch(SetUserProfile(res.data))
+            })
+    })
 }

@@ -1,9 +1,9 @@
 import React from "react";
 import s from "./Message.module.css";
 import {NavLink} from "react-router-dom";
-import {SendMessageAC, UpdateMsgBodyAC, useDispatch} from "../../store/dialogs-actions";
+import {SendMessageAC, UpdateMsgBodyAC, useDispatch} from "../../redux/dialogs-actions";
 import {useSelector} from "react-redux";
-import {selectDialogs} from "../../store/Selectors";
+import {selectDialogs} from "../../redux/Selectors";
 
 export const Dialog: React.FC = () => {
 
