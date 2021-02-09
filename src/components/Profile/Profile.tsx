@@ -1,7 +1,16 @@
 import React from "react"
+import {profileType} from "../../store/profile-reducer";
+import Preloader from "../common/Preloader/Preloader";
 
-export const Profile = () => {
+type profilePropsType = {
+    profile?: profileType
+}
+
+export const Profile: React.FC<profilePropsType> = ({profile}) => {
     return <div>
-        <h1>Profile</h1>
+        {!profile && <Preloader />}
+        {profile && <><img src={profile.photos.small} alt={profile.fullName}/>
+            <h1>{profile.fullName}</h1></>}
+        {profile && profile.lookingForAJob && <p>{profile.lookingForAJobDescription}</p>}
     </div>
 }

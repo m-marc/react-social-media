@@ -2,7 +2,6 @@ import React from "react";
 import {Route} from "react-router-dom";
 import c from "./Content.module.css";
 import {Dialog} from "../Dialogs/Dialogs";
-import {Profile} from "../Profile/Profile";
 import {Settings} from "../Settings/Settings";
 import {News} from "../News/News";
 import UsersContainer from "../Users/UsersContainer";
