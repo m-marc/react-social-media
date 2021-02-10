@@ -1,14 +1,15 @@
 import React from "react";
 import s from "./Message.module.css";
-import {NavLink} from "react-router-dom";
+import {NavLink, Redirect} from "react-router-dom";
 import {SendMessageAC, UpdateMsgBodyAC, useDispatch} from "../../redux/dialogs-actions";
 import {useSelector} from "react-redux";
-import {selectDialogs} from "../../redux/Selectors";
+import {selectAuth, selectDialogs} from "../../redux/Selectors";
 
 export const Dialog: React.FC = () => {
 
     const dispatch = useDispatch()
     const {dialogs, messages, newMessage} = useSelector(selectDialogs)
+    const {isAuth} = useSelector(selectAuth)
 
     const sendMessage = (e: React.MouseEvent<HTMLButtonElement>) => dispatch(SendMessageAC())
 

@@ -10,6 +10,7 @@ export const HeaderContainer = () => {
 
     useEffect(() => {
         dispatch(authMe())
-    }, [dispatch])
+    }, [])
+
     return <Header auth={isAuth} login={login} />
 }
