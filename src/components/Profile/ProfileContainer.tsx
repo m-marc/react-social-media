@@ -2,25 +2,25 @@ import React, {useEffect} from "react";
 import {Profile} from "./Profile";
 import {useRouteMatch} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
-import {selectAuth, selectProfile} from "../../redux/Selectors";
-import {getUserProfile} from "../../redux/profile-reducer";
+import {selectProfile} from "../../redux/Selectors";
+import {getUserProfile, getUserStatus} from "../../redux/profile-reducer";
 
-export interface MatchParams {
+interface MatchParams {
     userId: string
 }
 
 const ProfileContainer = () => {
     const dispatch = useDispatch()
-    const {profile} = useSelector(selectProfile)
-    const {isAuth} = useSelector(selectAuth)
+    const {profile, status} = useSelector(selectProfile)
     const match = useRouteMatch<MatchParams>("/profile/:userId")
     let userId = match ? match.params.userId : 13618
 
     useEffect( () => {
         dispatch(getUserProfile(userId))
+        dispatch(getUserStatus(userId))
     }, [userId])
 
-    return <Profile profile={profile} auth={isAuth}/>
+    return <Profile profile={profile} status={status}/>
 }
 
 export default ProfileContainer

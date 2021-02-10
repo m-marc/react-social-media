@@ -28,5 +28,11 @@ export const API = {
     },
     authMe() {
         return instance.get(`auth/me`).then(r => r.data)
+    },
+    getUserStatus(userId: string | number) {
+        return instance. get(`profile/status/${userId}`)
+    },
+    updateStatus(status: string) {
+        return instance.put(`profile/status`,{status})
     }
 }

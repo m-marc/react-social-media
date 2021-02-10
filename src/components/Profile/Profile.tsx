@@ -1,21 +1,34 @@
-import React from "react"
-import { Redirect } from "react-router-dom";
-import {profileType} from "../../redux/profile-reducer";
+import React, {useEffect, useState} from "react"
+import {profileType, updateStatus} from "../../redux/profile-reducer";
 import Preloader from "../common/Preloader/Preloader";
+import EditableSpan from "../common/EditableSpan/EditableSpan";
+import {useDispatch} from "react-redux";
 
 type profilePropsType = {
     profile?: profileType,
-    auth: boolean
+    status: string
 }
 
-export const Profile: React.FC<profilePropsType> = ({profile, auth}) => {
+export const Profile: React.FC<profilePropsType> = ({profile, status}) => {
+    const [stateStatus, setStatus] = useState<string>(status)
+    const dispatch = useDispatch()
 
-    if (!auth) return <Redirect to="/login" />
+    useEffect(() => {
+        setStatus(status)
+    }, [status])
 
     return <div>
-        {!profile && <Preloader />}
-        {profile && <><img src={profile.photos.small} alt={profile.fullName}/>
-            <h1>{profile.fullName}</h1></>}
-        {profile && profile.lookingForAJob && <p>{profile.lookingForAJobDescription}</p>}
+        {
+            profile ? <>
+                <img src={profile.photos.small} alt={profile.fullName}/>
+                <h1>{profile.fullName}</h1>
+                {profile.lookingForAJob && <p>{profile.lookingForAJobDescription}</p>}
+            </> : <Preloader />
+        }
+        <EditableSpan
+            value={stateStatus}
+            onChangeText={setStatus}
+            spanProps={{children: stateStatus ? undefined : "Enter status..."}}
+        />
     </div>
 }

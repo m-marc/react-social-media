@@ -1,4 +1,4 @@
-import {ACTIONS_TYPE, ProfileReducerTypes, SetUserProfile} from "./profile-actions";
+import {ACTIONS_TYPE, ProfileReducerTypes, SetUserProfile, SetUserStatus} from "./profile-actions";
 import {ThunkAction} from "redux-thunk";
 import {IGlobalState} from "./store";
 import {API} from "../api/api";
@@ -11,7 +11,8 @@ let initialState = {
         {id: 4, message: "Try my best", likesCount: 11},
     ],
     newPostText: "This is new post",
-    profile: undefined
+    profile: undefined,
+    status: ""
 }
 
 type postsType = {
@@ -44,7 +45,8 @@ export type profileType = {
 type profilePageType = {
     posts: postsType[],
     newPostText: string,
-    profile?: profileType
+    profile?: profileType,
+    status: string
 }
 
 export const profileReducer = (state: profilePageType = initialState, action: ProfileReducerTypes): profilePageType => {
@@ -70,6 +72,11 @@ export const profileReducer = (state: profilePageType = initialState, action: Pr
                 ...state,
                 profile: action.payload
             }
+        case ACTIONS_TYPE.SET_USER_STATUS:
+            return {
+                ...state,
+                status: action.payload
+            }
         default:
             return state
     }
@@ -84,4 +91,26 @@ export const getUserProfile = (userId: number | string): ThunkType => {
                 dispatch(SetUserProfile(res.data))
             })
     })
+}
+
+export const getUserStatus = (userId: number | string): ThunkType => {
+    return (dispatch => {
+        API.getUserStatus(userId).then(res => {
+            res.data === null ? dispatch(SetUserStatus("")) : dispatch(SetUserStatus(res.data))
+        })
+    })
+}
+
+export const updateStatus = (status: string): ThunkType => {
+    return (dispatch => API.updateStatus(status)
+            .then(res => {
+                if (res.data.resultCode === 0)
+                {
+                    dispatch(SetUserStatus(status))
+                }
+                else {
+                    console.log("Some error", res.data.messages)
+                }
+            })
+    )
 }

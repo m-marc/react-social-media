@@ -4,7 +4,8 @@ import {profileType} from "./profile-reducer";
 export enum ACTIONS_TYPE {
     ADD_POST = 'Profile/addPost',
     UPDATE_NEW_POST_TEXT = 'Profile/onPostSubmit',
-    SET_USER_PROFILE = 'Profile/onProfileChange'
+    SET_USER_PROFILE = 'Profile/onProfileChange',
+    SET_USER_STATUS = 'Profile/'
 }
 
 export type AddPost = {type: ACTIONS_TYPE.ADD_POST}
@@ -17,7 +18,10 @@ export const UpdateNewPostText = (text: string): UpdateNewPostText => ({type: AC
 export type SetUserProfile = {type: ACTIONS_TYPE.SET_USER_PROFILE, payload?: profileType}
 export const SetUserProfile = (profile?: profileType): SetUserProfile => ({type: ACTIONS_TYPE.SET_USER_PROFILE, payload: profile})
 
-export type ProfileReducerTypes = AddPost | SetUserProfile | UpdateNewPostText
+export type SetUserStatus = {type: ACTIONS_TYPE.SET_USER_STATUS, payload: string}
+export const SetUserStatus = (payload: string): SetUserStatus => ({type: ACTIONS_TYPE.SET_USER_STATUS, payload})
+
+export type ProfileReducerTypes = AddPost | SetUserProfile | UpdateNewPostText | SetUserStatus
 
 export function useDispatch() {
     const dispatch = _useDispatch()
