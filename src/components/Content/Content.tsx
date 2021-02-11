@@ -15,7 +15,7 @@ export const Content: React.FC = () => {
         <Switch>
             <Route path="/login" component={Login}/>
             <Route path="/messages" render={ () => <Dialog/> }/>
-            {/*<PrivateRoute component={ProfileContainer} path="/profile" />*/}
+            <PrivateRoute component={ProfileContainer} path="/profile" />
             <Route path="/profile" component={ProfileContainer}/>
             <Route path="/news" component={News}/>
             <Route path="/settings" component={Settings}/>

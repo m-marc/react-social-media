@@ -58,7 +58,7 @@ const EditableSpan: React.FC<SuperEditableSpanType> = (
                         autoFocus // пропсу с булевым значением не обязательно указывать true
                         onBlur={onBlurCallback}
                         onEnter={onEnterCallback}
-
+                        defaultValue={value}
                         {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
                     />
                 ) : (
