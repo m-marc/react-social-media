@@ -1,7 +1,8 @@
 import {ACTIONS_TYPE, AuthReducerTypes, userLogin} from "./auth-actions";
 import {ThunkAction} from "redux-thunk";
-import {IGlobalState} from "./store";
+import {BaseThunkType, IGlobalState} from "./store";
 import {API} from "../api/api";
+import {Dispatch} from "redux";
 
 type AuthStateType = {
     id: number | null
@@ -30,12 +31,19 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthRed
     }
 }
 
-type ThunkType = ThunkAction<void, IGlobalState, unknown, AuthReducerTypes>
+// type ThunkType = ThunkAction<void, IGlobalState, unknown, AuthReducerTypes>
 
-export const authMe = (): ThunkType => {
-    return (dispatch => {
-        API.authMe().then(res => {
-            if(res.resultCode === 0) dispatch(userLogin(res.data))
-        })
+export const authMe = () => (dispatch: Dispatch) => {
+    API.authMe().then(res => {
+        if(res.resultCode === 0) dispatch(userLogin(res.data))
+    })
+}
+
+export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch<any>) => {
+    API.login(email, password, rememberMe).then(res => {
+        if (res.resultCode === 0) {
+            dispatch(authMe())
+            console.log(res)
+        }
     })
 }

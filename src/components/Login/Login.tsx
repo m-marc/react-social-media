@@ -1,37 +1,43 @@
 import React from "react";
 import {Field, Form, Formik, FormikHelpers} from "formik";
+import {useDispatch} from "react-redux";
+import {login} from "../../redux/auth-reducer";
 
 interface Values {
-    username: string;
+    email: string;
     password: string;
+    rememberMe: boolean;
 }
 
 const Login = () => {
+    const dispatch = useDispatch()
     return <div>
         <h1>Login page</h1>
         <Formik
             initialValues={{
-                username: '',
+                email: '',
                 password: '',
+                rememberMe: false,
             }}
             onSubmit={(
                 values: Values,
                 { setSubmitting }: FormikHelpers<Values>
             ) => {
-                setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
-                    setSubmitting(false);
-                }, 500)
+                dispatch(login(values.email, values.password, values.rememberMe))
+                setSubmitting(false);
             }}
         >
             <Form>
                 <div>
-                    <label htmlFor="username">Username</label>
-                    <Field id="username" type="text" name="username" placeholder="John"/>
+                    <label htmlFor="email">Email</label>
+                    <Field id="email" type="email" name="email" placeholder="John@mail.com"/>
                 </div>
                 <div>
                     <label htmlFor="password">Password</label>
                     <Field id="password" type="password" name="password"/>
+                </div>
+                <div>
+                    <Field type="checkbox" name="rememberMe" />
                 </div>
                 <button type="submit">Login</button>
             </Form>
@@ -39,19 +45,4 @@ const Login = () => {
 
     </div>
 }
-
-// const LoginFormik = withFormik({
-//     mapPropsToValues: (props) => {
-//         return {
-//             // @ts-ignore
-//             email: props.email || '',
-//             // @ts-ignore
-//             password: props.password || ''
-//         }
-//     },
-//     handleSubmit: (values) => {
-//         console.log(values)
-//     }
-// })(Login)
-
 export default Login
