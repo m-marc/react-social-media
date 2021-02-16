@@ -1,7 +1,9 @@
 import React from "react";
 import {Field, Form, Formik, FormikHelpers} from "formik";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {login} from "../../redux/auth-reducer";
+import {selectAuth} from "../../redux/Selectors";
+import { Redirect } from "react-router-dom";
 
 interface Values {
     email: string;
@@ -11,7 +13,11 @@ interface Values {
 
 const Login = () => {
     const dispatch = useDispatch()
-    return <div>
+    const {isAuth} = useSelector(selectAuth)
+
+    return isAuth ?
+        <Redirect to="/profile" /> :
+    (<div>
         <h1>Login page</h1>
         <Formik
             initialValues={{
@@ -37,12 +43,13 @@ const Login = () => {
                     <Field id="password" type="password" name="password"/>
                 </div>
                 <div>
+                    <label htmlFor="rememberMe">Remember Me</label>
                     <Field type="checkbox" name="rememberMe" />
                 </div>
                 <button type="submit">Login</button>
             </Form>
         </Formik>
 
-    </div>
+    </div>)
 }
 export default Login

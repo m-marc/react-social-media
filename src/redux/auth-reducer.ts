@@ -1,6 +1,4 @@
 import {ACTIONS_TYPE, AuthReducerTypes, userLogin} from "./auth-actions";
-import {ThunkAction} from "redux-thunk";
-import {BaseThunkType, IGlobalState} from "./store";
 import {API} from "../api/api";
 import {Dispatch} from "redux";
 
@@ -24,7 +22,6 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthRed
             return {
                 ...state,
                 ...action.payload,
-                isAuth: true
             }
         default:
             return state
@@ -35,15 +32,20 @@ export const authReducer = (state: AuthStateType = initialState, action: AuthRed
 
 export const authMe = () => (dispatch: Dispatch) => {
     API.authMe().then(res => {
-        if(res.resultCode === 0) dispatch(userLogin(res.data))
+        if(res.resultCode === 0)
+            dispatch(userLogin({...res.data, isAuth: true}))
     })
 }
 
 export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: Dispatch<any>) => {
     API.login(email, password, rememberMe).then(res => {
-        if (res.resultCode === 0) {
-            dispatch(authMe())
-            console.log(res)
-        }
+        if (res.resultCode === 0) dispatch(authMe())
+    })
+}
+
+export const logout = () => (dispatch: Dispatch<any>) => {
+    API.logout().then(res => {
+        if (res.data.resultCode === 0)
+            dispatch(userLogin({id:null, email: null, login: null, isAuth: false}))
     })
 }

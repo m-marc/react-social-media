@@ -1,11 +1,17 @@
 import {useDispatch as _useDispatch} from "react-redux";
 
 export enum ACTIONS_TYPE {
-    AUTH_USER = 'Header/userLogin',
-    USER_LOGIN = 'Login/loginForm'
+    AUTH_USER = 'Header/userLogin'
 }
 
-export const userLogin = (userData: {}) => ({type: ACTIONS_TYPE.AUTH_USER, payload: userData})
+interface userData {
+    id: null | number;
+    email: null | string;
+    login: null | string;
+    isAuth?: boolean;
+}
+
+export const userLogin = (userData: userData) => ({type: ACTIONS_TYPE.AUTH_USER, payload: userData})
 export type userLogin = ReturnType<typeof userLogin>
 
 
