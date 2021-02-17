@@ -21,32 +21,39 @@ const Users: React.FC<usersPropsType> = (props) => {
         pageNumbers.push(i)
     }
 
-    return ( <>
-            <div>
-                { pageNumbers.map( btn => <button key={`b-${btn}`}
+    return <>
+        <div>
+            { pageNumbers.map( btn =>
+                <button key={`b-${btn}`}
                     onClick={() => {onPageChanged(btn)}}
                     className={currentPage === btn ? s.active : ""}>
-                    {btn}
-                </button>) }
-            </div>
-            <div>
-                {
-                    users.map( (u) => <div key={u.id}>
-                        <div className={s["user-logo"]}>
-                            <NavLink to={`/profile/${u.id}`}><img src={u.photos.small !== null ? u.photos.small : userIcon} alt=""/></NavLink>
-                            <button onClick={(event) => {onFollowCallback(u.id, u.followed, event.currentTarget)}}>{u.followed ? "Unfollow" : "Follow"}</button>
-                        </div>
+                        {btn}
+                </button>)
+            }
+        </div>
+        <div>
+            {
+                users.map( (u) => <div key={u.id}>
+                    <div className={s["user-logo"]}>
+                        <NavLink to={`/profile/${u.id}`}>
+                            <img src={u.photos.small !== null ? u.photos.small : userIcon} alt=""/>
+                        </NavLink>
+                        <button onClick={(event) => {
+                            onFollowCallback(u.id, u.followed, event.currentTarget)}
+                        }>
+                            {u.followed ? "Unfollow" : "Follow"}
+                        </button>
+                    </div>
+                    <div>
                         <div>
-                            <div>
-                                <h2>{u.name}</h2>
-                                <p>{u.status}</p>
-                            </div>
+                            <h2>{u.name}</h2>
+                            <p>{u.status}</p>
                         </div>
-                    </div>)
-                }
-            </div>
-        </>
-    )
+                    </div>
+                </div>)
+            }
+        </div>
+    </>
 }
 
 export default Users
